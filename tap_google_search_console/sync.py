@@ -14,8 +14,8 @@ BASE_URL = 'https://www.googleapis.com/webmasters/v3'
 # Reference: https://support.google.com/webmasters/answer/96568?hl=en
 
 # Todo : make these into parameters 
-ATTRIBUTION_DAYS = 14
-DATE_WINDOW_SIZE = 5
+attribution_days = config.get('attribution_days')
+date_window_size = config.get('date_window_size')
 
 def write_schema(catalog, stream_name):
     stream = catalog.get_stream(stream_name)
@@ -320,7 +320,7 @@ def sync(client, config, catalog, state):
     now_dt_str = strftime(now_dttm)[0:10]
     # Reference: https://support.google.com/webmasters/answer/96568?hl=en
     # There is some delay/lag in Google Search Console results reconcilliation
-    attribution_start_dttm = now_dttm - timedelta(days=ATTRIBUTION_DAYS)
+    attribution_start_dttm = now_dttm - timedelta(days=attribution_days)
 
     # Loop through selected_streams
     for stream_name in selected_streams:
@@ -386,7 +386,7 @@ def sync(client, config, catalog, state):
                             start_dttm = reports_dttm
                         else:
                             start_dttm = attribution_start_dttm
-                        end_dttm = start_dttm + timedelta(days=DATE_WINDOW_SIZE)
+                        end_dttm = start_dttm + timedelta(days=date_window_size)
                         if end_dttm > strptime_to_utc(end_date):
                             end_dttm = strptime_to_utc(end_date)
 
@@ -441,7 +441,7 @@ def sync(client, config, catalog, state):
 
                         # Set next date window
                         start_dttm = end_dttm
-                        end_dttm = start_dttm + timedelta(days=DATE_WINDOW_SIZE)
+                        end_dttm = start_dttm + timedelta(days=date_window_size)
                         if end_dttm > strptime_to_utc(end_date):
                             end_dttm = strptime_to_utc(end_date)
                         # End date window loop

@@ -17,7 +17,9 @@ REQUIRED_CONFIG_KEYS = [
     'refresh_token',
     'start_date',
     'end_date',
-    'user_agent'
+    'user_agent',
+    'attribution_days',
+    'date_window_size'
 ]
 
 def do_discover(client):
