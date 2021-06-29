@@ -202,6 +202,7 @@ class GoogleClient: # pylint: disable=too-many-instance-attributes
 
             #Sample query API for check site access
             path = 'sites/{}/searchAnalytics/query'.format(site_encoded)
+            #Todo - make this dynamic
             body = {'startDate': '2021-04-01', 'endDate': '2021-05-01'}
             self.post(path=path, data=json.dumps(body))
 

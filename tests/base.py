@@ -21,11 +21,13 @@ class GoogleSearchConsoleBaseTest(unittest.TestCase):
     INCREMENTAL = "INCREMENTAL"
     FULL_TABLE = "FULL_TABLE"
     START_DATE_FORMAT = "%Y-%m-%dT00:00:00Z"
+    END_DATE_FORMAT = "%Y-%m-%dT00:00:00Z"
     DATETIME_FMT = {
         "%Y-%m-%dT%H:%M:%SZ",
         "%Y-%m-%dT%H:%M:%S.000000Z"
     }
     start_date = ""
+    end_date = ""
     properties = {
         "client_id": "TAP_GOOGLE_SEARCH_CONSOLE_CLIENT_ID",
 	    "site_urls": "TAP_GOOGLE_SEARCH_CONSOLE_SITE_URLS"
@@ -49,6 +51,7 @@ class GoogleSearchConsoleBaseTest(unittest.TestCase):
         """Configuration properties required for the tap."""
         properties_dict = {
             'start_date': dt.strftime(dt.utcnow()-timedelta(days=14), self.START_DATE_FORMAT),
+            'end_date': dt.strftime(dt.utcnow()-timedelta(days=14), self.END_DATE_FORMAT)
         }
         props = self.properties
         for prop in props:
@@ -58,6 +61,7 @@ class GoogleSearchConsoleBaseTest(unittest.TestCase):
             return properties_dict
 
         properties_dict["start_date"] = self.start_date
+        properties_dict["end_date"] = self.end_date
         return properties_dict
 
     def get_credentials(self):

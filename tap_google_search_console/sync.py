@@ -12,6 +12,8 @@ BASE_URL = 'https://www.googleapis.com/webmasters/v3'
 # Google Search Console is generally delayed 2-3 days
 # However, delays up to 10 days have occurred in the past 6 months (late 2019, early 2020)
 # Reference: https://support.google.com/webmasters/answer/96568?hl=en
+
+# Todo : make these into parameters 
 ATTRIBUTION_DAYS = 14
 DATE_WINDOW_SIZE = 30
 
@@ -113,6 +115,7 @@ def sync_endpoint(client, #pylint: disable=too-many-branches
                   catalog,
                   state,
                   start_date,
+                  end_date,
                   stream_name,
                   site,
                   sub_type,
@@ -131,7 +134,7 @@ def sync_endpoint(client, #pylint: disable=too-many-branches
     last_datetime = None
     max_bookmark_value = None
 
-    last_datetime = get_bookmark(state, stream_name, site, sub_type, start_date)
+    last_datetime = get_bookmark(state, stream_name, site, sub_type, start_date, end_date)
     max_bookmark_value = last_datetime
 
     # Pagination: loop thru all pages of data
@@ -298,6 +301,7 @@ def update_currently_syncing(state, stream_name):
 
 def sync(client, config, catalog, state):
     start_date = config.get('start_date')
+    end_date = onfig.get('end_date')
 
     # Get selected_streams from catalog, based on state last_stream
     #   last_stream = Previous currently synced stream, if the load was interrupted
@@ -375,7 +379,8 @@ def sync(client, config, catalog, state):
                             stream_name,
                             site,
                             sub_type,
-                            start_date)
+                            start_date,
+                            end_date)
 
                         reports_dttm = strptime_to_utc(reports_dttm_str)
                         if reports_dttm < attribution_start_dttm:
@@ -388,7 +393,7 @@ def sync(client, config, catalog, state):
 
                     else:
                         start_dttm = strptime_to_utc(start_date)
-                        end_dttm = now_dttm
+                        end_dttm = strptime_to_utc(end_date)
 
                     # Date window loop
                     while start_dttm < now_dttm:
@@ -411,6 +416,7 @@ def sync(client, config, catalog, state):
                             catalog=catalog,
                             state=state,
                             start_date=start_date,
+                            end_date=end_date,
                             stream_name=stream_name,
                             site=site,
                             sub_type=sub_type,

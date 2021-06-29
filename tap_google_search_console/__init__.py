@@ -16,6 +16,7 @@ REQUIRED_CONFIG_KEYS = [
     'client_secret',
     'refresh_token',
     'start_date',
+    'end_date',
     'user_agent'
 ]
 

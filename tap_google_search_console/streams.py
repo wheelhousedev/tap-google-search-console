@@ -16,6 +16,8 @@
 #   sub_types: list of sub_types for endpoint looping; delfault = ['self']
 #   bookmark_type: Data type for bookmark, integer or datetime
 
+# Todo : Make streams dynamic
+
 STREAMS = {
     'sites': {
         'key_properties': ['site_url'],
