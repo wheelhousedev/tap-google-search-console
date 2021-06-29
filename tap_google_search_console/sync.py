@@ -15,7 +15,7 @@ BASE_URL = 'https://www.googleapis.com/webmasters/v3'
 
 # Todo : make these into parameters 
 ATTRIBUTION_DAYS = 14
-DATE_WINDOW_SIZE = 30
+DATE_WINDOW_SIZE = 5
 
 def write_schema(catalog, stream_name):
     stream = catalog.get_stream(stream_name)
