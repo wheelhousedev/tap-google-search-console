@@ -134,7 +134,7 @@ def sync_endpoint(client, #pylint: disable=too-many-branches
     last_datetime = None
     max_bookmark_value = None
 
-    last_datetime = get_bookmark(state, stream_name, site, sub_type, start_date, end_date)
+    last_datetime = get_bookmark(state, stream_name, site, sub_type, start_date)
     max_bookmark_value = last_datetime
 
     # Pagination: loop thru all pages of data
@@ -379,8 +379,7 @@ def sync(client, config, catalog, state):
                             stream_name,
                             site,
                             sub_type,
-                            start_date,
-                            end_date)
+                            start_date)
 
                         reports_dttm = strptime_to_utc(reports_dttm_str)
                         if reports_dttm < attribution_start_dttm:
