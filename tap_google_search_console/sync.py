@@ -13,10 +13,6 @@ BASE_URL = 'https://www.googleapis.com/webmasters/v3'
 # However, delays up to 10 days have occurred in the past 6 months (late 2019, early 2020)
 # Reference: https://support.google.com/webmasters/answer/96568?hl=en
 
-# Todo : make these into parameters 
-attribution_days = config.get('attribution_days')
-date_window_size = config.get('date_window_size')
-
 def write_schema(catalog, stream_name):
     stream = catalog.get_stream(stream_name)
     schema = stream.schema.to_dict()
@@ -302,6 +298,9 @@ def update_currently_syncing(state, stream_name):
 def sync(client, config, catalog, state):
     start_date = config.get('start_date')
     end_date = config.get('end_date')
+    attribution_days = config.get('attribution_days')
+    date_window_size = config.get('date_window_size')
+
 
     # Get selected_streams from catalog, based on state last_stream
     #   last_stream = Previous currently synced stream, if the load was interrupted
