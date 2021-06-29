@@ -301,7 +301,7 @@ def update_currently_syncing(state, stream_name):
 
 def sync(client, config, catalog, state):
     start_date = config.get('start_date')
-    end_date = onfig.get('end_date')
+    end_date = config.get('end_date')
 
     # Get selected_streams from catalog, based on state last_stream
     #   last_stream = Previous currently synced stream, if the load was interrupted
@@ -388,15 +388,15 @@ def sync(client, config, catalog, state):
                         else:
                             start_dttm = attribution_start_dttm
                         end_dttm = start_dttm + timedelta(days=DATE_WINDOW_SIZE)
-                        if end_dttm > now_dttm:
-                            end_dttm = now_dttm
+                        if end_dttm > strptime_to_utc(end_date):
+                            end_dttm = strptime_to_utc(end_date)
 
                     else:
                         start_dttm = strptime_to_utc(start_date)
                         end_dttm = strptime_to_utc(end_date)
 
                     # Date window loop
-                    while start_dttm < now_dttm:
+                    while start_dttm < end_dttm:
                         start_str = strftime(start_dttm)[0:10]
                         end_str = strftime(end_dttm)[0:10]
                         if stream_name.startswith('performance_report'):
@@ -443,8 +443,8 @@ def sync(client, config, catalog, state):
                         # Set next date window
                         start_dttm = end_dttm
                         end_dttm = start_dttm + timedelta(days=DATE_WINDOW_SIZE)
-                        if end_dttm > now_dttm:
-                            end_dttm = now_dttm
+                        if end_dttm > strptime_to_utc(end_date):
+                            end_dttm = strptime_to_utc(end_date)
                         # End date window loop
 
                     LOGGER.info('FINISHED Syncing Stream: {}, Site: {}, Type: {}'.format(
