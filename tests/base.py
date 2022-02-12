@@ -30,7 +30,7 @@ class GoogleSearchConsoleBaseTest(unittest.TestCase):
     end_date = ""
     properties = {
         "client_id": "TAP_GOOGLE_SEARCH_CONSOLE_CLIENT_ID",
-	    "site_urls": "TAP_GOOGLE_SEARCH_CONSOLE_SITE_URLS"
+	"site_urls": "TAP_GOOGLE_SEARCH_CONSOLE_SITE_URLS"
     }
     credentials = {
         "client_secret": "TAP_GOOGLE_SEARCH_CONSOLE_CLIENT_SECRET",
@@ -160,7 +160,7 @@ class GoogleSearchConsoleBaseTest(unittest.TestCase):
         if len(missing_envs) != 0:
             raise Exception("set " + ", ".join(missing_envs))
 
-     #########################
+    #########################
     #   Helper Methods      #
     #########################
 
